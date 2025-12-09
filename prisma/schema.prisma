@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model albums {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   title       String
@@ -26,10 +25,11 @@ model albums {
 }
 
 model User {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  sub     String  @unique
-  email   String?
-  name    String?
-  picture String?
-  albums  albums[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  sub       String   @unique
+  email     String?
+  name      String?
+  picture   String?
+  givenName String?
+  albums    albums[]
 }

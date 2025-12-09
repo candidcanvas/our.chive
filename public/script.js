@@ -456,42 +456,42 @@ const renderItem = (item) => {
             ` : ''}
         </div>
 
-        <section class="owner" style="${currentUser.isAuthenticated && item.owner && item.owner.name ? '' : 'display:none;'}">
+        <section class="owner">
             <img src="${item.owner && item.owner.picture ? item.owner.picture : '/assets/user.svg'}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/assets/user.svg';" />
             <span>${item.owner && item.owner.name ? item.owner.name : ''}</span>
         </section>
     
-    <div class="item-heading">
-        <h3>${item.title}</h3>
-    </div>
+        <div class="item-heading">
+            <h3>${item.title}</h3>
+        </div>
 
         ${imageHTML}
-    
-    <div class="artist-info">
-        <p>by ${item.artist || '<i>Unknown artist</i>'}</p>
-    </div>
-
-    <div class="item-info">
-        <div class="info-label">
-            <p>${item.format || '—'}</p>
+        
+        <div class="artist-info">
+            <p>by ${item.artist || '<i>Unknown artist</i>'}</p>
         </div>
-        <div class="info-label">
-            <p>${item.releaseType || '—'}</p>
+
+        <div class="item-info">
+            <div class="info-label">
+                <p>${item.format || '—'}</p>
+            </div>
+            <div class="info-label">
+                <p>${item.releaseType || '—'}</p>
+            </div>
         </div>
-    </div>
 
-    <div class="version-info">
-        <p class="write">${item.version || 'Version N/A'}</p>
-    </div>
+        <div class="version-info">
+            <p class="write">${item.version || 'Version N/A'}</p>
+        </div>
 
-    <section class="notes">  
-        <p class="write">${item.notes}</p>
-    </section>
+        <section class="notes">  
+            <p class="write">${item.notes}</p>
+        </section>
 
-    <div class="store-info">
-        <p>from ${item.storeId} on ${calendarWidget(item.dateBought)}</p>
-    </div>
-    `
+        <div class="store-info">
+            <p>from ${item.storeId} on ${calendarWidget(item.dateBought)}</p>
+        </div>
+        `
     // Sanitize HTML but allow referrerpolicy attribute on images
     // so that google profile pics can be used without errors
     const sanitizeOptions = { ADD_ATTR: ['referrerpolicy'] }

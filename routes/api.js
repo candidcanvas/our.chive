@@ -19,6 +19,7 @@ async function ensureUser(oidcUser) {
         throw new Error('Cannot ensure user without a valid Auth0 sub')
     }
     const { sub, email, name, picture } = oidcUser
+    const givenName = oidcUser.given_name || oidcUser.givenName || null
     // an upsert will perform either an update or a create
     // - update the user if they already exist, or 
     // - create a new user record if they do not exist yet
@@ -27,13 +28,15 @@ async function ensureUser(oidcUser) {
         update: {
             email: email || null,
             name: name || null,
-            picture: picture || null
+            picture: picture || null,
+            givenName: givenName 
         },
         create: {
             sub,
             email: email || null,
             name: name || null,
-            picture: picture || null
+            picture: picture || null,
+            givenName: givenName
         }
     })
     return user
@@ -59,6 +62,7 @@ router.get('/api/user', async (req, res) => {
             res.send({
                 ...req.oidc.user,
                 id: user.id,
+                givenName: user.givenName || null,
                 isAuthenticated: true
             })
         } else {
@@ -94,7 +98,8 @@ router.post('/data', async (req, res) => {
             data: {
                 ...createData,
                 ownerId: user.id
-            }
+            },
+            include: { owner: true }
         })
         res.status(201).send(created)
     } catch (err) {
@@ -179,7 +184,8 @@ router.put('/data/:id', async (req, res) => {
 
         const updated = await prisma[model].update({
             where: { id: req.params.id },
-            data: requestBody
+            data: requestBody,
+            include: { owner: true }
         })
 
         return res.send(updated)
