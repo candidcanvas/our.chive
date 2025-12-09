@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width initial-scale=1"
+  />
+
+  <title>Personal Data</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Special+Elite&display=swap"
+    rel="stylesheet"
+  >
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+
+  <!--  DOMPurify cleans up HTML to prevent XSS attacks
+  https://www.jsdelivr.com/package/npm/dompurify  -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.3.0/dist/purify.min.js"></script>
+
+</head>
+
+<body>
+  <header class="site-header">
+    <img
+      id="logo"
+      src="/assets/cat.svg"
+      alt="Home"
+    />
+    <div class="site-title">
+      <h1>Personal Data</h1>
+      <h3><a href="https://developer.mozilla.org/en-US/docs/Glossary/CRUD">CRUD</a> +
+        <a href="https://vercel.com/docs/vercel-blob">blob storage</a>
+        +
+        <a href="https://auth0.com/">Auth0</a>
+      </h3>
+    </div>
+    <section id="profile"></section>
+    <section id="controls"></section>
+  </header>
+
+  <dialog id="formDialog">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2>Share a Cat</h2>
+      </div>
+
+      <div class="modal-body">
+        <form
+          id="myForm"
+          method="dialog"
+        >
+          <!-- Hidden field to store ID for updates -->
+          <input
+            type="hidden"
+            name="id"
+            id="id"
+          />
+
+          <!-- Hidden field to store image data -->
+          <input
+            type="hidden"
+            name="imageUrl"
+            id="imageUrl"
+          />
+
+          <!-- Image upload section -->
+          <fieldset class="upload-fieldset">
+            <legend>Cat Photo</legend>
+            <div id="uploadArea">
+              <img
+                id="imagePreview"
+                src="/assets/photo.svg"
+                alt="Image preview"
+              />
+              <div class="upload-controls">
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  style="display:none"
+                />
+                <button
+                  type="button"
+                  id="browseButton"
+                >Browse</button>
+                <button
+                  type="button"
+                  id="removeImageButton"
+                  style="display:none;"
+                >Remove</button>
+                <p id="uploadInstructions">or drag and drop an image here</p>
+              </div>
+            </div>
+            <div
+              id="noticeArea"
+              style="display:none"
+            ></div>
+          </fieldset>
+
+          <fieldset>
+            <label for="name">Cat Name</label>
+            <input
+              required
+              type="text"
+              name="name"
+              id="name"
+              placeholder="e.g. Sofia"
+              autocomplete="off"
+            />
+            <small class="validation">Name is required</small>
+          </fieldset>
+
+          <fieldset>
+            <label for="birthDate">Birth Date</label>
+            <input
+              type="date"
+              name="birthDate"
+              id="birthDate"
+            />
+          </fieldset>
+
+          <fieldset>
+            <label for="primaryColor">Primary Color</label>
+            <input
+              type="color"
+              name="primaryColor"
+              id="primaryColor"
+              value="#5f5854"
+            />
+          </fieldset>
+
+          <fieldset>
+            <label for="secondaryColor">Secondary Color</label>
+            <input
+              type="color"
+              name="secondaryColor"
+              id="secondaryColor"
+              value="#c4c8cf"
+            />
+          </fieldset>
+
+          <fieldset>
+            <label for="breed">Breed</label>
+            <select
+              name="breed"
+              id="breed"
+            >
+              <option
+                value=""
+                disabled
+                selected
+              >Select a Breed</option>
+              <optgroup label="Domestic">
+                <option value="Abyssinian">Abyssinian</option>
+                <option value="Bengal">Bengal</option>
+                <option value="Burmese">Burmese</option>
+                <option value="Chartreux">Chartreux</option>
+                <option value="Maine Coon">Maine Coon</option>
+                <option value="Persian">Persian</option>
+                <option value="Ragdoll">Ragdoll</option>
+                <option value="Shorthair">Shorthair</option>
+                <option value="Siamese">Siamese</option>
+                <option value="Sphynx">Sphynx</option>
+                <option value="Ragamuffin">Ragamuffin</option>
+              </optgroup>
+              <optgroup label="Exotic">
+                <option value="Tiger">Tiger</option>
+                <option value="Lion">Lion</option>
+                <option value="Panther">Panther</option>
+                <option value="Jaguar">Jaguar</option>
+                <option value="Lynx">Lynx</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="Other">Other</option>
+                <option value="Unknown">Unknown</option>
+              </optgroup>
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <label for="description">Description</label>
+            <small>Provide a brief biography.</small>
+            <textarea
+              placeholder="Biography"
+              required
+              minlength="20"
+              name="description"
+              id="description"
+              rows="6"
+              cols="30"
+            ></textarea>
+            <small class="validation">Bio must be at least 20 characters.</small>
+          </fieldset>
+
+          <fieldset>
+            <label for="playfulness">Playfulness</label>
+            <small>Chill or chaotic?</small>
+            <input
+              type="range"
+              min="0"
+              max="10"
+              name="playfulness"
+              id="playfulness"
+            />
+          </fieldset>
+
+          <fieldset>
+            <label for="appetite">Appetite</label>
+            <small>Is this a hungry Cat?</small>
+            <input
+              type="range"
+              min="0"
+              max="10"
+              name="appetite"
+              id="appetite"
+            />
+          </fieldset>
+
+          <fieldset>
+            <legend>Food</legend>
+            <small>Any Preferences?</small>
+            <label for="wet">
+              <input
+                type="radio"
+                id="wet"
+                name="food"
+                value="wet"
+              />
+              <span>Wet</span>
+            </label>
+            <label for="dry">
+              <input
+                type="radio"
+                id="dry"
+                name="food"
+                value="dry"
+              />
+              <span>Dry</span>
+            </label>
+            <label for="mixed">
+              <input
+                type="radio"
+                id="mixed"
+                name="food"
+                value="mixed"
+              />
+              <span>Mixed</span>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Rescue Status</legend>
+            <label for="isAdopted">
+              <input
+                type="checkbox"
+                name="isAdopted"
+                id="isAdopted"
+              />
+              <span>Adopted</span>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <label for="microchip">Microchip Number</label>
+            <small>It's usually nine digits</small>
+            <input
+              required
+              type="number"
+              name="microchip"
+              step="1"
+              max="999999999"
+              id="microchip"
+              placeholder="e.g. 123456789"
+            />
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="save"
+          id="saveButton"
+        >Save</button>
+        <button
+          type="button"
+          class="cancel"
+          id="cancelButton"
+        >Cancel</button>
+      </div>
+    </div>
+  </dialog>
+
+  <main>
+    <section id="contentArea"></section>
+  </main>
+
+  <section id="status">
+    <p id="readyStatus">✅ MongoDB is Ready</p>
+    <p id="notReadyStatus">❌ MongoDB is not connected. Please check your connection string in <code>.env</code> file.
+    </p>
+  </section>
+
+  <section id="intro">
+    <h3>About</h3>
+    <p>Building on <a href="https://github.com/ixd-system-design/Uploading-Images">prior explorations with CRUD and
+        Image Uploads</a>,
+      this demo adds functionality for user authentication <a href="https://auth0.com/">via Auth0</a> and the <a
+        href="https://github.com/auth0/express-openid-connect"
+      >Express OpenID Connect</a> library. The application uses MongoDB to persist data and to define the owner of each
+      record. Accordingly, our <a href="https://www.prisma.io/orm">Prisma</a> schema includes models for both users and
+      cats.
+    </p>
+    <p>Backend endpoints include the following logic:</p>
+    <ul>
+      <li>Only authenticated users can create, update, or delete cat records.</li>
+      <li>Each cat record is associated with the user who created it.</li>
+      <li>Users can only modify or delete their own cat records.</li>
+      <li>All users can view all cat records, regardless of ownership.</li>
+    </ul>
+    <p>Frontend interfaces reflect these options by revealing and concealing buttons depending on the user's logged-in
+      state, and their relationship to the data.</p>
+    <p>The pattern being used here assumes that the backend enforces the rules, while the frontend communicates those
+      rules to the user. </p>
+    <h2 id="setup">Setup</h2>
+    <p>To setup this project, we can follow the same process as for the two previous demos on which this repository is
+      based:</p>
+    <ol>
+      <li>To setup MongoDB, Prisma, and Vercel Blob, follow the same setup process as defined in the <a
+          href="https://github.com/ixd-system-design/Uploading-Images"
+        >Image Uploads</a> demo.</li>
+      <li>To Setup Auth0, follow the setup process defined in the <a
+          href="https://github.com/ixd-system-design/Vault">Vault</a> demo.</li>
+    </ol>
+
+  </section>
+
+
+
+
+  <footer>
+    Created by <a href="https://nsitu.ca">Harold Sikkema</a> in the context of
+    Systems Design in the Interaction Design program at Sheridan College.
+  </footer>
+
+  <script
+    src="script.js"
+    type="module"
+  ></script>
+
+
+</body>
+
+</html>

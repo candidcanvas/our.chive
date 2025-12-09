@@ -1,0 +1,697 @@
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-family: "Google Sans Flex", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0,
+        "wdth" 100,
+        "GRAD" 0,
+        "ROND" 0;
+
+    font-weight: 400;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(221 192 216)
+}
+
+
+h2 img {
+    width: 2rem;
+}
+
+nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.example {
+    border: 1px solid #666;
+    border-radius: 2rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+}
+
+.example h2 {
+    margin: 0;
+}
+
+.example p {
+    margin: 0;
+}
+
+
+footer {
+    text-align: center;
+    padding: 3rem;
+}
+
+
+header p,
+header ul {
+    margin: 1rem;
+}
+
+
+
+#intro {
+    max-width: 60rem;
+    margin: auto;
+    text-align: left;
+}
+
+/* Shared button style */
+button,
+.button {
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.button,
+button.button,
+button.save,
+button.cancel,
+.edit-btn,
+.delete-btn,
+#browseButton,
+#removeImageButton {
+    color: #fff;
+}
+
+.button,
+button.button {
+    background: #3834b7;
+}
+
+.button:hover,
+button.button:hover {
+    background: #232170;
+}
+
+button.save,
+#browseButton {
+    background: rgb(3, 136, 3);
+}
+
+button.save:hover,
+#browseButton:hover {
+    background-color: rgb(3, 103, 3);
+}
+
+button.cancel {
+    background: rgb(134, 134, 134);
+}
+
+button.cancel:hover {
+    background: rgb(101, 101, 101);
+}
+
+#removeImageButton {
+    background: rgb(211, 47, 47);
+}
+
+#removeImageButton:hover {
+    background-color: rgb(183, 28, 28);
+}
+
+
+#contentArea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 1200px) {
+    #contentArea {
+        grid-template-columns: auto;
+    }
+}
+
+/* Dialog styling */
+dialog {
+    max-width: 60rem;
+    width: 90%;
+    max-height: 90vh;
+    padding: 0;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 90vh;
+}
+
+.modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.modal-header p {
+    margin: 0.5rem 0 0 0;
+    color: #666;
+}
+
+.modal-body {
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.modal-footer {
+    padding: 1rem 2rem;
+    border-top: 1px solid #ddd;
+    flex-shrink: 0;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+#status p {
+    display: none;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 1rem;
+    border: none;
+}
+
+fieldset:has(textarea) {
+    width: 100%;
+}
+
+legend {
+    text-align: left;
+}
+
+textarea {
+    padding: 1rem;
+    align-self: stretch;
+}
+
+fieldset:has(input[type=checkbox]) {
+    gap: 0.5rem;
+}
+
+/* layout checkboxes and radio buttons horizontally */
+label:has(input[type=radio]),
+label:has(input[type=checkbox]) {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* make radio and checkbox elements a bit bigger*/
+input[type=radio],
+input[type=checkbox] {
+    margin: 0;
+    padding: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+
+/* Set accent colour for inputs. */
+input {
+    accent-color: rgb(3, 136, 3);
+}
+
+/* Style default padding for form elements */
+input,
+select,
+option {
+    padding: 0.5rem;
+}
+
+/* Range slider doesn't need padding on the sides */
+input[type=range] {
+    padding: 0.5rem 0rem;
+}
+
+/* Color picker does not need padding at all */
+input[type=color] {
+    width: 108px;
+    height: 36px;
+    margin: 0;
+    background: white;
+    border: 1px solid #aaa;
+    border-radius: 0.5rem;
+    padding: 0.15rem 0.25rem;
+}
+
+.validation {
+    color: #d32f2f;
+    display: none;
+    margin-top: 0.25rem;
+}
+
+/* Invalid input styling - only show after user interaction */
+input:user-invalid,
+select:user-invalid,
+textarea:user-invalid {
+    border: 2px solid #d32f2f;
+    background-color: #ffebee;
+}
+
+/* NOTE: the plus sign (+) in CSS is a sibling selector */
+input:user-invalid+.validation,
+select:user-invalid+.validation,
+textarea:user-invalid+.validation {
+    display: block;
+}
+
+/*  card styles */
+.item-card {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    background: #ffffff66;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.item-card h3 {
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+    color: #333;
+}
+
+.item-heading {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.microchip-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    color: #666;
+    margin: 0.75rem 0 0 2rem;
+}
+
+.item-info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+}
+
+.item-info p {
+    margin: 0.5rem 0;
+}
+
+.item-info section span {
+    white-space: pre;
+}
+
+section.breed,
+section.adoption,
+section.food,
+section.owner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    ;
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px solid #ccc;
+}
+
+section.food img,
+section.adoption img {
+    width: 1.5rem;
+}
+
+section.owner img {
+    width: 2rem;
+    margin: -.25rem 0 -.25rem -.5rem;
+    border-radius: 1rem;
+}
+
+
+
+/* styling for the calendar widget*/
+.calendar {
+    display: flex;
+    flex-direction: column;
+    width: 4rem;
+    text-align: center;
+    margin: 1rem 0 1rem auto;
+    background: #3b3b3b66;
+    color: #fff;
+    border-radius: 1rem;
+}
+
+.calendar .born {
+    margin: 0;
+    padding-top: 0.5rem;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.calendar .born img {
+    width: 1.5rem;
+}
+
+.calendar .year {
+    border-top: 1px solid white;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+    border-radius: 0 0 1rem 1rem;
+}
+
+.calendar .month {
+    border-top: 1px solid white;
+    text-transform: uppercase;
+    background: #3b3b3b66;
+    font-weight: 700;
+}
+
+.calendar .day {
+    border-top: 1px solid white;
+    background: #3b3b3bbb;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+
+.description {
+    max-width: 32rem;
+    margin-bottom: auto;
+}
+
+
+/* Set accent colour for meter. */
+
+/* Style the background bar of the meter */
+meter::-webkit-meter-bar {
+    background: #fff;
+    /* background color of the meter */
+}
+
+/* Style for the 'optimum' range (e.g., the highest value range) */
+meter::-webkit-meter-optimum-value {
+    background: #0c5b3a;
+}
+
+/* Style for the 'sub-optimum' range (e.g., medium value range) */
+meter::-webkit-meter-suboptimum-value {
+    background: #7b287c;
+}
+
+/* Style for the 'even-less-good' range (e.g., low value range) */
+meter::-webkit-meter-even-less-good-value {
+    background: #e3c784;
+}
+
+
+
+.stats .stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 300;
+    padding: 0 0 0 1rem;
+}
+
+.stat span {
+    width: 5rem;
+    text-align: right;
+}
+
+.stats meter {
+    flex-grow: 1;
+    min-width: 8rem;
+    height: 2rem;
+}
+
+.item-icon {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    -webkit-mask-image: url(/assets/cat.svg);
+    mask-image: url(/assets/cat.svg);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+
+.item-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.edit-btn {
+    background: rgb(3, 136, 3);
+}
+
+.edit-btn:hover {
+    background-color: rgb(3, 103, 3);
+}
+
+.delete-btn {
+    background: rgb(211, 47, 47);
+}
+
+.delete-btn:hover {
+    background-color: rgb(183, 28, 28);
+}
+
+/* Upload Area Styles */
+.upload-fieldset {
+    width: 100%;
+    align-items: stretch;
+}
+
+#uploadArea {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#uploadArea.ready {
+    border-color: #4CAF50;
+    background-color: #f1f8f4;
+}
+
+#uploadArea:hover {
+    border-color: #999;
+}
+
+#imagePreview {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.upload-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+#uploadArea p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+#noticeArea {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.item-image-area {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 10px;
+
+}
+
+.item-image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px 8px 0 0;
+    backdrop-filter: blur(10px);
+}
+
+/* Cat Image in Card */
+.item-image {
+    height: 100%;
+    object-fit: contain;
+
+}
+
+.item-card {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+header img {
+    width: 4rem;
+    height: 4rem;
+}
+
+#profile img {
+    border-radius: 50%;
+}
+
+
+#profile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: left;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    margin: 1rem;
+}
+
+
+
+#profile h4,
+#profile h5 {
+    margin: 0;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem auto 1rem auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 70rem;
+}
+
+.site-title h1 {
+    text-align: left;
+    margin: 0;
+    font-family: "BBH Sans Hegarty", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.site-title h3 {
+    margin: 0.25rem 0 0 0;
+    font-weight: 400;
+
+
+}
+
+.site-title h3 a {
+    color: #000;
+}
+
+#logo {
+    width: 4rem;
+    height: 4rem;
+    cursor: pointer;
+}
+
+#controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.filter-label {
+    background: white;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.filter-label img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+#dataFilter {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-family: inherit;
+}
