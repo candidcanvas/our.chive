@@ -8,7 +8,7 @@
     content="width=device-width initial-scale=1"
   />
 
-  <title>Personal Data</title>
+  <title>our.chive</title>
 
   <link
     rel="preconnect"
@@ -28,6 +28,11 @@
     href="style.css"
   />
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
   <!--  DOMPurify cleans up HTML to prevent XSS attacks
   https://www.jsdelivr.com/package/npm/dompurify  -->
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.3.0/dist/purify.min.js"></script>
@@ -38,16 +43,12 @@
   <header class="site-header">
     <img
       id="logo"
-      src="/assets/cat.svg"
+      src="/assets/logo.svg"
       alt="Home"
     />
     <div class="site-title">
-      <h1>Personal Data</h1>
-      <h3><a href="https://developer.mozilla.org/en-US/docs/Glossary/CRUD">CRUD</a> +
-        <a href="https://vercel.com/docs/vercel-blob">blob storage</a>
-        +
-        <a href="https://auth0.com/">Auth0</a>
-      </h3>
+      <h1>our.chive</h1>
+      <h3>share your physical albums with us!</h3>
     </div>
     <section id="profile"></section>
     <section id="controls"></section>
@@ -56,7 +57,7 @@
   <dialog id="formDialog">
     <div class="modal-container">
       <div class="modal-header">
-        <h2>Share a Cat</h2>
+        <h2>add a new album</h2>
       </div>
 
       <div class="modal-body">
@@ -78,230 +79,193 @@
             id="imageUrl"
           />
 
-          <!-- Image upload section -->
-          <fieldset class="upload-fieldset">
-            <legend>Cat Photo</legend>
-            <div id="uploadArea">
-              <img
-                id="imagePreview"
-                src="/assets/photo.svg"
-                alt="Image preview"
+          <div class="leftForm">
+            <fieldset>
+              <label for="title">Title</label>
+              <input
+                required
+                type="text"
+                name="title"
+                id="title"
+                placeholder="e.g. A Matter of Time, Wishbone"
+                autocomplete="off"
               />
-              <div class="upload-controls">
+              <small class="validation">Title is required</small>
+            </fieldset>
+
+            <fieldset>
+              <label for="artist">Artist</label>
+              <input
+                required
+                type="text"
+                name="artist"
+                id="artist"
+                placeholder="e.g. Laufey, Conan Gray"
+                autocomplete="off"
+              />
+              <small class="validation">Artist is required</small>
+            </fieldset>
+
+            <div class="storeDate">
+              <fieldset>
+                <label for="storeId">Bought from</label>
                 <input
-                  type="file"
-                  id="fileInput"
-                  accept="image/*"
-                  style="display:none"
+                  type="text"
+                  name="storeId"
+                  id="storeId"
+                  placeholder="e.g. Sonic Boom, Kops Records"
                 />
-                <button
-                  type="button"
-                  id="browseButton"
-                >Browse</button>
-                <button
-                  type="button"
-                  id="removeImageButton"
-                  style="display:none;"
-                >Remove</button>
-                <p id="uploadInstructions">or drag and drop an image here</p>
-              </div>
+              </fieldset>
+
+              <fieldset>
+                <label for="dateBought">Date Bought</label>
+                <input
+                  type="date"
+                  name="dateBought"
+                  id="dateBought"
+                />
+              </fieldset>
             </div>
-            <div
-              id="noticeArea"
-              style="display:none"
-            ></div>
-          </fieldset>
 
-          <fieldset>
-            <label for="name">Cat Name</label>
-            <input
-              required
-              type="text"
-              name="name"
-              id="name"
-              placeholder="e.g. Sofia"
-              autocomplete="off"
-            />
-            <small class="validation">Name is required</small>
-          </fieldset>
+            <fieldset>
+              <label for="notes">Notes</label>
+              <textarea
+                placeholder="Notes about pressing, condition, or special edition"
+                name="notes"
+                id="notes"
+                rows="3"
+                cols="30"
+              ></textarea>
+            </fieldset>
 
-          <fieldset>
-            <label for="birthDate">Birth Date</label>
-            <input
-              type="date"
-              name="birthDate"
-              id="birthDate"
-            />
-          </fieldset>
+            <fieldset>
+              <legend>Release Type</legend>
+              <div class="radioGroup">
+                <div class="releaseCol">
+                  <label for="releaseType_single">
+                    <input type="radio" name="releaseType" id="releaseType_single" value="Single">
+                    Single
+                  </label>
+                  <label for="releaseType_ep">
+                    <input type="radio" name="releaseType" id="releaseType_ep" value="EP">
+                    EP
+                  </label>
+                  <label for="releaseType_fullLength">
+                    <input type="radio" name="releaseType" id="releaseType_fullLength" value="Full length">
+                    Full length
+                  </label>
+                </div>
 
-          <fieldset>
-            <label for="primaryColor">Primary Color</label>
-            <input
-              type="color"
-              name="primaryColor"
-              id="primaryColor"
-              value="#5f5854"
-            />
-          </fieldset>
+                <div class="releaseCol">
+                  <label for="releaseType_liveAlbum">
+                    <input type="radio" name="releaseType" id="releaseType_liveAlbum" value="Live album">
+                    Live album
+                  </label>
+                  <label for="releaseType_remix">
+                    <input type="radio" name="releaseType" id="releaseType_remix" value="Remix">
+                    Remix
+                  </label>
+                  <label for="releaseType_compilation">
+                    <input type="radio" name="releaseType" id="releaseType_compilation" value="Compilation">
+                    Compilation
+                  </label>
+                </div>
 
-          <fieldset>
-            <label for="secondaryColor">Secondary Color</label>
-            <input
-              type="color"
-              name="secondaryColor"
-              id="secondaryColor"
-              value="#c4c8cf"
-            />
-          </fieldset>
+                <div class="releaseCol">
+                  <label for="releaseType_demo">
+                    <input type="radio" name="releaseType" id="releaseType_demo" value="Demo">
+                    Demo
+                  </label>
+                  <label for="releaseType_soundtrack">
+                    <input type="radio" name="releaseType" id="releaseType_soundtrack" value="Soundtrack">
+                    Soundtrack
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        
+          <div class="rightForm">
+            <!-- Image upload section -->
+            <fieldset class="upload-fieldset">
+              <legend>Image of your album</legend>
+              <div id="uploadArea">
+                <img
+                  id="imagePreview"
+                  src="assets/photo.svg"
+                  alt="Image preview"
+                />
+                <div class="upload-controls">
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/*"
+                    style="display:none"
+                  />
+                  <button
+                    type="button"
+                    id="browseButton"
+                  >Browse</button>
+                  <button
+                    type="button"
+                    id="removeImageButton"
+                    style="display:none;"
+                  >Remove</button>
+                  <p id="uploadInstructions">or drag and drop an image here</p>
+                </div>
+              </div>
+              <div
+                id="noticeArea"
+                style="display:none"
+              ></div>
+            </fieldset>
 
-          <fieldset>
-            <label for="breed">Breed</label>
-            <select
-              name="breed"
-              id="breed"
-            >
-              <option
-                value=""
-                disabled
-                selected
-              >Select a Breed</option>
-              <optgroup label="Domestic">
-                <option value="Abyssinian">Abyssinian</option>
-                <option value="Bengal">Bengal</option>
-                <option value="Burmese">Burmese</option>
-                <option value="Chartreux">Chartreux</option>
-                <option value="Maine Coon">Maine Coon</option>
-                <option value="Persian">Persian</option>
-                <option value="Ragdoll">Ragdoll</option>
-                <option value="Shorthair">Shorthair</option>
-                <option value="Siamese">Siamese</option>
-                <option value="Sphynx">Sphynx</option>
-                <option value="Ragamuffin">Ragamuffin</option>
-              </optgroup>
-              <optgroup label="Exotic">
-                <option value="Tiger">Tiger</option>
-                <option value="Lion">Lion</option>
-                <option value="Panther">Panther</option>
-                <option value="Jaguar">Jaguar</option>
-                <option value="Lynx">Lynx</option>
-              </optgroup>
-              <optgroup label="Other">
-                <option value="Other">Other</option>
-                <option value="Unknown">Unknown</option>
-              </optgroup>
-            </select>
-          </fieldset>
+            <fieldset>
+              <legend>Format</legend>
+              <div class="radioGroup" id="formatGroup">
+                <label for="format_vinyl">
+                  <input type="radio" name="format" id="format_vinyl" value="Vinyl">
+                  Vinyl
+                </label>
 
-          <fieldset>
-            <label for="description">Description</label>
-            <small>Provide a brief biography.</small>
-            <textarea
-              placeholder="Biography"
-              required
-              minlength="20"
-              name="description"
-              id="description"
-              rows="6"
-              cols="30"
-            ></textarea>
-            <small class="validation">Bio must be at least 20 characters.</small>
-          </fieldset>
+                <label for="format_cd">
+                  <input type="radio" name="format" id="format_cd" value="CD">
+                  CD
+                </label>
 
-          <fieldset>
-            <label for="playfulness">Playfulness</label>
-            <small>Chill or chaotic?</small>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              name="playfulness"
-              id="playfulness"
-            />
-          </fieldset>
+                <label for="format_cassette">
+                  <input type="radio" name="format" id="format_cassette" value="Cassette">
+                  Cassette
+                </label>
+              </div>
+            </fieldset>
 
-          <fieldset>
-            <label for="appetite">Appetite</label>
-            <small>Is this a hungry Cat?</small>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              name="appetite"
-              id="appetite"
-            />
-          </fieldset>
-
-          <fieldset>
-            <legend>Food</legend>
-            <small>Any Preferences?</small>
-            <label for="wet">
+            <fieldset>
+              <label for="version">Version</label>
               <input
-                type="radio"
-                id="wet"
-                name="food"
-                value="wet"
+                type="text"
+                name="version"
+                id="version"
+                placeholder="e.g. Timeless Blue Cassette, Black Cat Edition"
               />
-              <span>Wet</span>
-            </label>
-            <label for="dry">
-              <input
-                type="radio"
-                id="dry"
-                name="food"
-                value="dry"
-              />
-              <span>Dry</span>
-            </label>
-            <label for="mixed">
-              <input
-                type="radio"
-                id="mixed"
-                name="food"
-                value="mixed"
-              />
-              <span>Mixed</span>
-            </label>
-          </fieldset>
+            </fieldset>
+          </div>
 
-          <fieldset>
-            <legend>Rescue Status</legend>
-            <label for="isAdopted">
-              <input
-                type="checkbox"
-                name="isAdopted"
-                id="isAdopted"
-              />
-              <span>Adopted</span>
-            </label>
-          </fieldset>
-
-          <fieldset>
-            <label for="microchip">Microchip Number</label>
-            <small>It's usually nine digits</small>
-            <input
-              required
-              type="number"
-              name="microchip"
-              step="1"
-              max="999999999"
-              id="microchip"
-              placeholder="e.g. 123456789"
-            />
-          </fieldset>
         </form>
       </div>
 
       <div class="modal-footer">
         <button
           type="button"
-          class="save"
-          id="saveButton"
-        >Save</button>
-        <button
-          type="button"
           class="cancel"
           id="cancelButton"
         >Cancel</button>
+        
+        <button
+          type="button"
+          class="save"
+          id="saveButton"
+        >Confirm</button>
       </div>
     </div>
   </dialog>
@@ -317,45 +281,19 @@
   </section>
 
   <section id="intro">
-    <h3>About</h3>
-    <p>Building on <a href="https://github.com/ixd-system-design/Uploading-Images">prior explorations with CRUD and
-        Image Uploads</a>,
-      this demo adds functionality for user authentication <a href="https://auth0.com/">via Auth0</a> and the <a
-        href="https://github.com/auth0/express-openid-connect"
-      >Express OpenID Connect</a> library. The application uses MongoDB to persist data and to define the owner of each
-      record. Accordingly, our <a href="https://www.prisma.io/orm">Prisma</a> schema includes models for both users and
-      cats.
+    <h3>Welcome to our.chive</h3>
+    <p>
+      Share your physical albums with us! our.chive is a community-driven platform where music fans can share their albums and their stories with one another.   
     </p>
-    <p>Backend endpoints include the following logic:</p>
-    <ul>
-      <li>Only authenticated users can create, update, or delete cat records.</li>
-      <li>Each cat record is associated with the user who created it.</li>
-      <li>Users can only modify or delete their own cat records.</li>
-      <li>All users can view all cat records, regardless of ownership.</li>
-    </ul>
-    <p>Frontend interfaces reflect these options by revealing and concealing buttons depending on the user's logged-in
-      state, and their relationship to the data.</p>
-    <p>The pattern being used here assumes that the backend enforces the rules, while the frontend communicates those
-      rules to the user. </p>
-    <h2 id="setup">Setup</h2>
-    <p>To setup this project, we can follow the same process as for the two previous demos on which this repository is
-      based:</p>
-    <ol>
-      <li>To setup MongoDB, Prisma, and Vercel Blob, follow the same setup process as defined in the <a
-          href="https://github.com/ixd-system-design/Uploading-Images"
-        >Image Uploads</a> demo.</li>
-      <li>To Setup Auth0, follow the setup process defined in the <a
-          href="https://github.com/ixd-system-design/Vault">Vault</a> demo.</li>
-    </ol>
-
   </section>
 
 
 
 
   <footer>
-    Created by <a href="https://nsitu.ca">Harold Sikkema</a> in the context of
-    Systems Design in the Interaction Design program at Sheridan College.
+    Designed by Breana Velasco<br>
+    Fall Semester 2025 for Interaction Design at Sheridan College<br>
+    System Design Remix for System Designer: Databases and Dynamic Data
   </footer>
 
   <script

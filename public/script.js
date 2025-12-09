@@ -191,18 +191,18 @@ const loadUser = async () => {
         controlsArea.innerHTML = currentUser.isAuthenticated ? `
         
          <label class="filter-label">
-                    <img src="/assets/filter.svg" alt="Filter" />  
-                    <select id="dataFilter">
-                        <option value="all">All Data</option>
-                        <option value="mine">Owned by Me</option>
-                        <option value="others">Owned by Others</option>
-                    </select>
-                </label>
-<button class="button" id="createButton">Create</button>
-                <button id="logoutButton" class="button">Logout</button>
+            <img src="/assets/filter.svg" alt="Filter" />  
+                <select id="dataFilter">
+                    <option value="all">all albums</option>
+                    <option value="mine">posted by me</option>
+                    <option value="others">posted by others</option>
+                </select>
+            </label>
+            <button class="button" id="createButton">add an album</button>
+            <button id="logoutButton" class="button">logout</button>
             ` :
 
-            '<button id="loginButton" class="button">Login</button>'
+            '<button id="loginButton" class="button">login</button>'
 
         // Wire up dynamically created create button
         document.querySelector('#createButton')?.addEventListener('click', openCreateDialog)
@@ -310,11 +310,11 @@ const saveItem = async (data) => {
         if (!response.ok) {
             // Auth/ownership errors
             if (response.status === 401) {
-                alert('Please log in to create or edit cats.')
+                alert('Please log in to add or edit albums.')
                 return
             }
             if (response.status === 403) {
-                alert('You can only edit cats that you created.')
+                alert('You can only edit albums that you added.')
                 return
             }
 
@@ -368,7 +368,7 @@ const editItem = (data) => {
     refreshUI()
 
     // Update the heading to indicate edit mode
-    formHeading.textContent = 'Edit Cat'
+    formHeading.textContent = 'Edit album'
 
     // Show the dialog
     formDialog.showModal()
@@ -376,7 +376,7 @@ const editItem = (data) => {
 
 // Delete item
 const deleteItem = async (id) => {
-    if (!confirm('Are you sure you want to delete this cat?')) {
+    if (!confirm('Are you sure you want to delete this album?')) {
         return
     }
 
@@ -394,11 +394,11 @@ const deleteItem = async (id) => {
         }
         else {
             if (response.status === 401) {
-                alert('Please log in to delete cats.')
+                alert('Please log in to delete albums.')
                 return
             }
             if (response.status === 403) {
-                alert('You can only delete cats that you created.')
+                alert('You can only delete albums that you added.')
                 return
             }
             const errorData = await response.json()
@@ -413,15 +413,10 @@ const deleteItem = async (id) => {
 
 const calendarWidget = (date) => {
     if (!date) return ''
-    const month = new Date(date).toLocaleString("en-CA", { month: 'short', timeZone: "UTC" })
+    const month = new Date(date).toLocaleString("en-CA", { month: '2-digit', timeZone: "UTC" })
     const day = new Date(date).toLocaleString("en-CA", { day: '2-digit', timeZone: "UTC" })
     const year = new Date(date).toLocaleString("en-CA", { year: 'numeric', timeZone: "UTC" })
-    return ` <div class="calendar">
-                <div class="born"><img src="./assets/birthday.svg" /></div>
-                <div class="month">${month}</div>
-                <div class="day">${day}</div> 
-                <div class="year">${year}</div>
-            </div>`
+    return `${day}/${month}/${year}`
 
 }
 
@@ -452,67 +447,52 @@ const renderItem = (item) => {
 
 
     const template = /*html*/`
-    
-        ${imageHTML}
-    
-    <div class="item-heading">
-        <h3> ${item.name} </h3>
-        <div class="microchip-info">
-            <img src="/assets/chip.svg" /> ${item.microchip || '<i>???</i>'} 
-        </div>  
-    </div>
-    <div class="item-info">  
-        <div class="item-icon" style="
-            background: linear-gradient(135deg, 
-            ${item.primaryColor} 0%, 
-            ${item.primaryColor} 40%, 
-            ${item.secondaryColor} 60%, 
-            ${item.secondaryColor} 100%); 
-        ">
-        </div> 
-        <div class="stats">
-            <div class="stat">
-                <span>Playfulness</span>
-                <meter max="10" min="0" value="${item.playfulness || 0}"></meter> 
-            </div>
-            <div class="stat">
-                <span>Appetite</span>
-                <meter max="10" min="0" value="${item.appetite || 0}"></meter> 
-            </div>
-        </div> 
-            
-         ${calendarWidget(item.birthDate)}
-    </div>
-        
-    <div class="item-info">  
-        <section class="owner" style="${currentUser.isAuthenticated && item.owner && item.owner.name ? '' : 'display:none;'}">
-    <img src="${item.owner && item.owner.picture ? item.owner.picture : '/assets/user.svg'}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/assets/user.svg';" />
-    <span>${item.owner && item.owner.name ? item.owner.name : ''}</span>
-</section>
-        <section class="breed" style="${item.breed ? '' : 'display:none;'}">  
-            <img src="/assets/ribbon.svg" />  ${item.breed}
-        </section>
-        <section class="food" style="${item.food ? '' : 'display:none;'}">
-             ${item.food ? `<img src="/assets/${item.food}.svg" /> <span>${item.food} food</span>` : ''}
-        </section> 
-        <section class="adoption">
-            <img src="/assets/${item.isAdopted ? 'adopted' : 'paw'}.svg" />
-            ${item.isAdopted ? 'Adopted' : 'Available'}
-        </section> 
-    </div>
-
-    <section class="description" style="${item.description ? '' : 'display:none;'}">  
-        <p>${item.description}</p>
-    </section>
-
-        
-           
         <div class="item-actions">
             ${isOwner(item) ? `
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
+                <button class="delete-btn" aria-label="Delete">
+                    <img src="assets/delete.svg" alt="" class="icon" />
+                </button>
+                <button class="edit-btn" aria-label="Edit">
+                    <img src="assets/edit.svg" alt="" class="icon" />
+                </button>
             ` : ''}
         </div>
+
+        <section class="owner" style="${currentUser.isAuthenticated && item.owner && item.owner.name ? '' : 'display:none;'}">
+            <img src="${item.owner && item.owner.picture ? item.owner.picture : '/assets/user.svg'}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/assets/user.svg';" />
+            <span>${item.owner && item.owner.name ? item.owner.name : ''}</span>
+        </section>
+    
+    <div class="item-heading">
+        <h3>${item.title}</h3>
+    </div>
+
+        ${imageHTML}
+    
+    <div class="artist-info">
+        <p>by ${item.artist || '<i>Unknown artist</i>'}</p>
+    </div>
+
+    <div class="item-info">
+        <div class="info-label">
+            <p>${item.format || '—'}</p>
+        </div>
+        <div class="info-label">
+            <p>${item.releaseType || '—'}</p>
+        </div>
+    </div>
+
+    <div class="version-info">
+        <p class="write">${item.version || 'Version N/A'}</p>
+    </div>
+
+    <section class="notes">  
+        <p class="write">${item.notes}</p>
+    </section>
+
+    <div class="store-info">
+        <p>from ${item.storeId} on ${calendarWidget(item.dateBought)}</p>
+    </div>
     `
     // Sanitize HTML but allow referrerpolicy attribute on images
     // so that google profile pics can be used without errors
@@ -576,7 +556,7 @@ const getData = async () => {
 
 // Revert to the default form title on reset
 myForm.addEventListener('reset', () => {
-    formHeading.textContent = 'Share a Cat'
+    formHeading.textContent = 'add a new album'
     // Reset image preview
     setImagePreview(null)
     // Update upload UI

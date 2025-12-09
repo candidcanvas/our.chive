@@ -7,29 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model cats {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  adoptionDate   DateTime? @db.Date
-  birthDate      DateTime? @db.Date
-  breed          String?
-  declawed       Boolean?
-  description    String?
-  fosterDate     DateTime? @db.Date
-  fosterDuration Int?
-  location       String?
-  name           String?
-  neutered       Boolean?
-  sex            String?
-  primaryColor   String?
-  secondaryColor String?
-  playfulness    Int?
-  appetite       Int?
-  microchip      Int?
-  isAdopted      Boolean?
-  food           String?
-  imageUrl       String?
-  ownerId        String?   @db.ObjectId
-  owner          User?     @relation(fields: [ownerId], references: [id])
+
+model albums {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  artist      String
+  dateBought  DateTime? @db.Date
+  storeId     String?
+  version     String? // album variants
+  releaseType String? // single, ep, full length
+  format      String? // vinyl, cd, cassette
+  notes       String?
+  imageUrl    String?
+  createdAt   DateTime  @default(now()) @db.Date
+  updatedAt   DateTime  @updatedAt @db.Date
+  ownerId     String?   @db.ObjectId
+  owner       User?     @relation(fields: [ownerId], references: [id])
 }
 
 model User {
@@ -38,5 +31,5 @@ model User {
   email   String?
   name    String?
   picture String?
-  cats    cats[]
+  albums  albums[]
 }
