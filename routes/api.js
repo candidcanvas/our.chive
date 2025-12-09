@@ -4,7 +4,7 @@ import express from 'express'
 const router = express.Router()
 
 // Set this to match the model name in your Prisma schema
-const model = 'cats'
+const model = 'albums'
 
 // Prisma lets NodeJS communicate with MongoDB
 // Let's import and initialize the Prisma client
@@ -122,7 +122,7 @@ router.get('/data', async (req, res) => {
 
 
 // ----- findMany() with search ------- 
-// Accepts optional search parameter to filter by name field
+// Accepts optional search parameter to filter by title or artist
 // See also: https://www.prisma.io/docs/orm/reference/prisma-client-reference#examples-7
 router.get('/search', async (req, res) => {
     try {
@@ -131,13 +131,13 @@ router.get('/search', async (req, res) => {
         // fetch the records from the database
         const result = await prisma[model].findMany({
             where: {
-                name: {
-                    contains: searchTerms,
-                    mode: 'insensitive'  // case-insensitive search
-                }
+                OR: [
+                    { title: { contains: searchTerms, mode: 'insensitive' } },
+                    { artist: { contains: searchTerms, mode: 'insensitive' } }
+                ]
             },
             include: { owner: true },
-            orderBy: { name: 'asc' },
+            orderBy: { title: 'asc' },
             take: 10
         })
         res.send(result)
@@ -199,17 +199,17 @@ router.delete('/data/:id', async (req, res) => {
     }
 
     try {
-        // Get the cat record first (including owner) to check permissions and image URL
-        const cat = await prisma[model].findUnique({
+        // Get the album record first (including owner) to check permissions and image URL
+        const album = await prisma[model].findUnique({
             where: { id: req.params.id },
             include: { owner: true }
         })
 
-        if (!cat) {
+        if (!album) {
             return res.status(404).send({ error: 'Record not found' })
         }
 
-        if (!cat.owner || cat.owner.sub !== req.oidc.user.sub) {
+        if (!album.owner || album.owner.sub !== req.oidc.user.sub) {
             return res.status(403).send({ error: 'Forbidden' })
         }
 
@@ -219,10 +219,10 @@ router.delete('/data/:id', async (req, res) => {
         })
 
         // Delete associated image from Vercel Blob (if exists)
-        if (cat.imageUrl) {
+        if (album.imageUrl) {
             try {
-                await del(cat.imageUrl)
-                console.log('Deleted image:', cat.imageUrl)
+                await del(album.imageUrl)
+                console.log('Deleted image:', album.imageUrl)
             } catch (blobError) {
                 console.error('Failed to delete image:', blobError)
                 // Don't fail the whole operation if image delete fails

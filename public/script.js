@@ -1,5 +1,3 @@
-// Main UI script (includes upload logic)
-
 let readyStatus = document.querySelector('#readyStatus')
 let notReadyStatus = document.querySelector('#notReadyStatus')
 let myForm = document.querySelector('#myForm')
