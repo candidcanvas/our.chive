@@ -186,9 +186,7 @@ const loadUser = async () => {
             `
 
         controlsArea.innerHTML = currentUser.isAuthenticated ? `
-        
-         <label class="filter-label">
-            <img src="/assets/filter.svg" alt="Filter" />  
+            <label class="filter-label">
                 <select id="dataFilter">
                     <option value="all">all albums</option>
                     <option value="mine">posted by me</option>

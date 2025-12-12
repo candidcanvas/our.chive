@@ -498,14 +498,14 @@ textarea:user-invalid+.validation {
 
 #dataFilter {
     background: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
     font-size: 1.1rem;
     cursor: pointer;
     appearance: none;
     background-image: url('./assets/filter.svg');
     background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1.1rem;
+    background-position: left 0.5rem center;
+    background-size: 1.5rem;
 }
 
 .owner {
