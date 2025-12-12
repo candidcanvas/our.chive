@@ -498,8 +498,9 @@ textarea:user-invalid+.validation {
 
 #dataFilter {
     background: none;
-    padding: 2rem 1rem 2rem 2.5rem;
+    padding: 1rem 1rem 1rem 2.5rem;
     font-size: 1.1rem;
+    text-align: left;
     cursor: pointer;
     appearance: none;
     background-image: url('./assets/filter.svg');
