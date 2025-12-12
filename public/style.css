@@ -108,7 +108,7 @@ button.save,
 #createButton,
 #browseButton,
 #loginButton,
-#logoutButton
+#logoutButton,
 .edit-btn {
     background: #E75A65;
 }
@@ -137,7 +137,7 @@ button.cancel:hover, #removeImageButton:hover {
     margin: 0 2rem;
     align-items: start;
     overflow: visible;
-    row-gap: 10rem;
+    row-gap: 12rem;
     margin-top: 12rem;
 }
 

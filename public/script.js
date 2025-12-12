@@ -182,7 +182,6 @@ const loadUser = async () => {
                 <img src="${currentUser.picture}" referrerPolicy="no-referrer" crossorigin="anonymous" onerror="this.onerror=null;this.src='/assets/user.svg';">
                 <div>
                     <h4>${currentUser.name}</h4>
-                    <h5>${currentUser.email || ''}</h5>
                 </div>
             `
 
