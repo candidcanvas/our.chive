@@ -497,9 +497,15 @@ textarea:user-invalid+.validation {
 }
 
 #dataFilter {
+    background: none;
     padding: 0.5rem 1rem;
     font-size: 1.1rem;
     cursor: pointer;
+    appearance: none;
+    background-image: url('./assets/filter.svg');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.1rem;
 }
 
 .owner {
