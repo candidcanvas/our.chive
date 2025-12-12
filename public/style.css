@@ -511,7 +511,7 @@ textarea:user-invalid+.validation {
 
 .owner {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 3fr;
 }
 
 .owner img {
