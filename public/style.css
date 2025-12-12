@@ -483,7 +483,7 @@ textarea:user-invalid+.validation {
     margin: 1rem 0;
 }
 
-.info-label, .store-info, .filter-label {
+.info-label, .store-info, #dataFilter{
     font-size: 1rem;
     font-family: "Courier Prime", monospace;
     font-weight: 700;
