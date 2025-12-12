@@ -498,7 +498,7 @@ textarea:user-invalid+.validation {
 
 #dataFilter {
     background: none;
-    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    padding: 2rem 1rem 2rem 2.5rem;
     font-size: 1.1rem;
     cursor: pointer;
     appearance: none;
