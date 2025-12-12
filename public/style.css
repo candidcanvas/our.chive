@@ -153,7 +153,6 @@ button.cancel:hover, #removeImageButton:hover {
     background: #625844;
 }
 
-
 #contentArea {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -484,7 +483,7 @@ textarea:user-invalid+.validation {
     margin: 1rem 0;
 }
 
-.info-label, .store-info {
+.info-label, .store-info, .filter-label {
     font-size: 1rem;
     font-family: "Courier Prime", monospace;
     font-weight: 700;
