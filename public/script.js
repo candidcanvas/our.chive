@@ -445,6 +445,7 @@ const renderItem = (item) => {
 
 
     const template = /*html*/`
+        <div class="pin-wood"></div>
         <div class="item-actions">
             ${isOwner(item) ? `
                 <button class="delete-btn" aria-label="Delete">
@@ -458,7 +459,7 @@ const renderItem = (item) => {
 
         <section class="owner">
             <img src="${item.owner && item.owner.picture ? item.owner.picture : '/assets/user.svg'}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/assets/user.svg';" />
-            <span>${item.owner && item.owner.name ? item.owner.name : ''}</span>
+            <span>from ${item.owner && item.owner.givenName ? item.owner.givenName : ''}'s archive</span>
         </section>
     
         <div class="item-heading">
@@ -485,7 +486,7 @@ const renderItem = (item) => {
         </div>
 
         <section class="notes">  
-            <p class="write">${item.notes}</p>
+            <p class="write">${item.notes || 'No notes :)'}</p>
         </section>
 
         <div class="store-info">
